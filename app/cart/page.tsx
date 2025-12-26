@@ -3,26 +3,10 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { Trash2, Plus, Minus } from 'lucide-react';
+import { useCart } from '@/contexts/CartContext';
 
 export default function CartPage() {
-  const [cartItems, setCartItems] = useState([
-    {
-      id: 1,
-      name: "Chronos Elite",
-      price: 2499,
-      quantity: 1,
-      image: "https://images.unsplash.com/photo-1523170335258-f5ed11844a49?w=400&h=400&fit=crop",
-      category: "Luxury"
-    },
-    {
-      id: 2,
-      name: "Stellar Titanium",
-      price: 3299,
-      quantity: 1,
-      image: "https://images.unsplash.com/photo-1526045431048-f857369baa09?w=400&h=400&fit=crop",
-      category: "Sport"
-    }
-  ]);
+  const { cartItems, updateQuantity, removeFromCart } = useCart();
 
   const [formData, setFormData] = useState({
     fullName: '',
@@ -38,18 +22,11 @@ export default function CartPage() {
     cvv: ''
   });
 
-  const updateQuantity = (id: number, change: number) => {
-    setCartItems(cartItems.map(item => {
-      if (item.id === id) {
-        const newQuantity = Math.max(1, item.quantity + change);
-        return { ...item, quantity: newQuantity };
-      }
-      return item;
-    }));
-  };
-
-  const removeItem = (id: number) => {
-    setCartItems(cartItems.filter(item => item.id !== id));
+  const handleQuantityUpdate = (id: number, change: number) => {
+    const item = cartItems.find(i => i.id === id);
+    if (item) {
+      updateQuantity(id, item.quantity + change);
+    }
   };
 
   const calculateSubtotal = () => {
@@ -96,77 +73,77 @@ export default function CartPage() {
       </div>
 
       <div className="relative z-10">
-        <div className="py-20 overflow-hidden">
-          <div className="container mx-auto px-8">
-            <h1 className="text-7xl font-black text-white text-center tracking-wider drop-shadow-2xl animate-fade-in mb-6">
+        <div className="py-12 sm:py-16 lg:py-20 overflow-hidden">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-white text-center tracking-wider drop-shadow-2xl animate-fade-in mb-4 sm:mb-6">
               Shopping Cart
             </h1>
-            <p className="text-2xl text-white/80 text-center font-medium max-w-3xl mx-auto">
+            <p className="text-lg sm:text-xl lg:text-2xl text-white/80 text-center font-medium max-w-3xl mx-auto px-4">
               Complete your purchase
             </p>
           </div>
         </div>
 
-        <div className="container mx-auto px-8 pb-20">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 pb-12 sm:pb-16 lg:pb-20">
           {cartItems.length === 0 ? (
-            <div className="bg-white/95 backdrop-blur-2xl rounded-[2rem] shadow-2xl border border-white/60 p-20 text-center">
-              <h2 className="text-4xl font-black text-gray-900 mb-6">Your Cart is Empty</h2>
-              <p className="text-gray-600 font-medium text-lg mb-8">Add some watches to get started!</p>
+            <div className="bg-white/95 backdrop-blur-2xl rounded-[2rem] shadow-2xl border border-white/60 p-8 sm:p-12 lg:p-20 text-center">
+              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black text-gray-900 mb-4 sm:mb-6">Your Cart is Empty</h2>
+              <p className="text-gray-600 font-medium text-base sm:text-lg mb-6 sm:mb-8">Add some watches to get started!</p>
               <Link
                 href="/watches"
-                className="inline-block bg-gradient-to-r from-gray-800 via-gray-700 to-gray-900 hover:from-gray-900 hover:via-gray-800 hover:to-black text-white px-10 py-4 rounded-xl font-bold text-lg shadow-2xl transition-all transform hover:scale-105"
+                className="inline-block bg-gradient-to-r from-gray-800 via-gray-700 to-gray-900 hover:from-gray-900 hover:via-gray-800 hover:to-black text-white px-8 sm:px-10 py-3 sm:py-4 rounded-xl font-bold text-base sm:text-lg shadow-2xl transition-all transform hover:scale-105"
               >
                 Browse Collection
               </Link>
             </div>
           ) : (
-            <div className="grid lg:grid-cols-3 gap-8">
-              <div className="lg:col-span-2 space-y-6">
-                <div className="bg-white/95 backdrop-blur-2xl rounded-[2rem] shadow-2xl border border-white/60 p-8 relative overflow-hidden">
+            <div className="grid lg:grid-cols-3 gap-6 sm:gap-8">
+              <div className="lg:col-span-2 space-y-4 sm:space-y-6">
+                <div className="bg-white/95 backdrop-blur-2xl rounded-[2rem] shadow-2xl border border-white/60 p-4 sm:p-6 lg:p-8 relative overflow-hidden">
                   <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-gray-800 via-gray-700 to-gray-900 animate-gradient"></div>
                   
-                  <h2 className="text-3xl font-black bg-gradient-to-r from-gray-800 via-gray-700 to-gray-900 bg-clip-text text-transparent mb-6">
+                  <h2 className="text-2xl sm:text-3xl font-black bg-gradient-to-r from-gray-800 via-gray-700 to-gray-900 bg-clip-text text-transparent mb-4 sm:mb-6">
                     Cart Items ({cartItems.length})
                   </h2>
 
-                  <div className="space-y-4">
+                  <div className="space-y-3 sm:space-y-4">
                     {cartItems.map((item) => (
-                      <div key={item.id} className="flex gap-6 p-4 bg-gray-50 rounded-2xl border-2 border-gray-200 hover:border-gray-400 transition-all">
+                      <div key={item.id} className="flex flex-col sm:flex-row gap-4 sm:gap-6 p-3 sm:p-4 bg-gray-50 rounded-2xl border-2 border-gray-200 hover:border-gray-400 transition-all">
                         <img
                           src={item.image}
                           alt={item.name}
-                          className="w-24 h-24 object-cover rounded-xl"
+                          className="w-full sm:w-20 lg:w-24 h-48 sm:h-20 lg:h-24 object-cover rounded-xl"
                         />
                         <div className="flex-1">
                           <div className="flex justify-between items-start mb-2">
                             <div>
-                              <h3 className="text-xl font-black text-gray-900">{item.name}</h3>
-                              <span className="text-sm text-gray-600 font-bold">{item.category}</span>
+                              <h3 className="text-lg sm:text-xl font-black text-gray-900">{item.name}</h3>
+                              <span className="text-xs sm:text-sm text-gray-600 font-bold">{item.category}</span>
                             </div>
                             <button
-                              onClick={() => removeItem(item.id)}
+                              onClick={() => removeFromCart(item.id)}
                               className="text-red-600 hover:text-red-800 transition-colors p-2 hover:bg-red-50 rounded-lg"
                             >
-                              <Trash2 className="w-5 h-5" />
+                              <Trash2 className="w-4 h-4 sm:w-5 sm:h-5" />
                             </button>
                           </div>
                           <div className="flex justify-between items-center">
-                            <div className="flex items-center gap-3 bg-white rounded-lg border-2 border-gray-300">
+                            <div className="flex items-center gap-2 sm:gap-3 bg-white rounded-lg border-2 border-gray-300">
                               <button
-                                onClick={() => updateQuantity(item.id, -1)}
-                                className="p-2 hover:bg-gray-100 transition-colors rounded-l-lg"
+                                onClick={() => handleQuantityUpdate(item.id, -1)}
+                                className="p-1.5 sm:p-2 hover:bg-gray-100 transition-colors rounded-l-lg"
                               >
-                                <Minus className="w-4 h-4" />
+                                <Minus className="w-3 h-3 sm:w-4 sm:h-4" />
                               </button>
-                              <span className="font-bold text-gray-900 min-w-[2rem] text-center">{item.quantity}</span>
+                              <span className="font-bold text-gray-900 min-w-[1.5rem] sm:min-w-[2rem] text-center text-sm sm:text-base">{item.quantity}</span>
                               <button
-                                onClick={() => updateQuantity(item.id, 1)}
-                                className="p-2 hover:bg-gray-100 transition-colors rounded-r-lg"
+                                onClick={() => handleQuantityUpdate(item.id, 1)}
+                                className="p-1.5 sm:p-2 hover:bg-gray-100 transition-colors rounded-r-lg"
                               >
-                                <Plus className="w-4 h-4" />
+                                <Plus className="w-3 h-3 sm:w-4 sm:h-4" />
                               </button>
                             </div>
-                            <span className="text-2xl font-black text-gray-900">
+                            <span className="text-xl sm:text-2xl font-black text-gray-900">
                               ${(item.price * item.quantity).toLocaleString()}
                             </span>
                           </div>
@@ -176,15 +153,15 @@ export default function CartPage() {
                   </div>
                 </div>
 
-                <div className="bg-white/95 backdrop-blur-2xl rounded-[2rem] shadow-2xl border border-white/60 p-8 relative overflow-hidden">
+                <div className="bg-white/95 backdrop-blur-2xl rounded-[2rem] shadow-2xl border border-white/60 p-4 sm:p-6 lg:p-8 relative overflow-hidden">
                   <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-gray-800 via-gray-700 to-gray-900 animate-gradient"></div>
                   
-                  <h2 className="text-3xl font-black bg-gradient-to-r from-gray-800 via-gray-700 to-gray-900 bg-clip-text text-transparent mb-6">
+                  <h2 className="text-2xl sm:text-3xl font-black bg-gradient-to-r from-gray-800 via-gray-700 to-gray-900 bg-clip-text text-transparent mb-4 sm:mb-6">
                     Payment Information
                   </h2>
 
-                  <form onSubmit={handleSubmit} className="space-y-6">
-                    <div className="grid md:grid-cols-2 gap-6">
+                  <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6">
+                    <div className="grid sm:grid-cols-2 gap-4 sm:gap-6">
                       <div>
                         <label className="block text-gray-700 font-bold mb-2">Full Name *</label>
                         <input

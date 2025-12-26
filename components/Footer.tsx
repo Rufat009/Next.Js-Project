@@ -3,16 +3,16 @@ import Link from 'next/link';
 export default function Footer() {
   return (
     <footer className="bg-gradient-to-r from-gray-100 via-gray-200 to-gray-100 border-t-2 border-gray-300 mt-auto">
-      <div className="container mx-auto px-6 py-12">
-        <div className="flex flex-col items-center space-y-6">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-10 lg:py-12">
+        <div className="flex flex-col items-center space-y-4 sm:space-y-6">
           <Link href="/" className="flex flex-col items-center group">
-            <h2 className="text-4xl font-black tracking-wider bg-gradient-to-r from-gray-800 via-gray-700 to-gray-900 bg-clip-text text-transparent group-hover:from-gray-900 group-hover:via-gray-800 group-hover:to-black transition-all">
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black tracking-wider bg-gradient-to-r from-gray-800 via-gray-700 to-gray-900 bg-clip-text text-transparent group-hover:from-gray-900 group-hover:via-gray-800 group-hover:to-black transition-all">
               VOLUMENZEIT
             </h2>
-            <p className="text-sm tracking-widest text-gray-600 font-semibold mt-2 group-hover:text-gray-900 transition-colors">VOLUMETRIC WRIST WATCHES</p>
+            <p className="text-[0.6rem] sm:text-xs lg:text-sm tracking-widest text-gray-600 font-semibold mt-1 sm:mt-2 group-hover:text-gray-900 transition-colors">VOLUMETRIC WRIST WATCHES</p>
           </Link>
 
-          <div className="flex items-center space-x-8 text-gray-600 font-semibold">
+          <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-6 lg:gap-8 text-gray-600 font-semibold text-sm sm:text-base">
             <Link href="/about" className="hover:text-gray-900 transition-colors">
               About
             </Link>
@@ -27,7 +27,7 @@ export default function Footer() {
             </Link>
           </div>
 
-          <div className="flex items-center space-x-6">
+          <div className="flex items-center space-x-4 sm:space-x-6">
             <a href="#" className="w-10 h-10 flex items-center justify-center rounded-xl bg-white hover:bg-gradient-to-r hover:from-gray-800 hover:to-gray-900 text-gray-600 hover:text-white transition-all shadow-md hover:shadow-xl transform hover:-translate-y-1">
               <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
                 <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>

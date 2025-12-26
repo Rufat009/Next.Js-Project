@@ -4,7 +4,7 @@ import Link from 'next/link';
 
 export default function NotFound() {
   return (
-    <div className="min-h-screen w-full relative overflow-hidden bg-slate-900 flex items-center justify-center">
+    <div className="fixed inset-0 w-screen h-screen overflow-hidden bg-slate-900 flex items-center justify-center z-50">
       <div className="absolute inset-0 w-full h-full bg-gradient-to-br from-gray-900 via-black to-gray-900 opacity-90"></div>
       
       <div className="absolute inset-0 w-full h-full" style={{
@@ -18,7 +18,7 @@ export default function NotFound() {
         <div className="absolute top-40 right-20 w-96 h-96 bg-gray-800 rounded-full mix-blend-multiply filter blur-3xl opacity-40 animate-pulse" style={{ animationDelay: '2s', animationDuration: '4s' }}></div>
       </div>
 
-      <div className="relative z-10 container mx-auto px-8 py-20">
+      <div className="relative z-10 w-full px-8 py-20 overflow-y-auto max-h-screen">
         <div className="max-w-6xl mx-auto text-center animate-fade-in">
           <div className="inline-block p-8 bg-gradient-to-br from-gray-800 via-gray-700 to-gray-900 rounded-full mb-8 shadow-2xl shadow-gray-900/50 animate-bounce-slow">
             <svg className="w-32 h-32 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
